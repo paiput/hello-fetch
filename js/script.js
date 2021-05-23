@@ -1,5 +1,9 @@
 const searchBtn = document.getElementById('search-btn');
 
+searchBtn.addEventListener('click', () => {
+    fetchUser();
+});
+
 // cuando termine de cargar el documento poblamos la tabla
 document.addEventListener("DOMContentLoaded", () => {
     fetchData();
