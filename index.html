@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    
+    <title>Hello fetch</title>
+</head>
+<body>
+    <div id="container" class="container mt-3">
+        <h1>Hello fetch</h1>
+        <p>Ingresá el ID del usuario que querés buscar.</p>
+        <div class="from-group row">
+            <div class="col-xs-2 mx-2">
+                <input id="userID" placeholder="ID" class="form-control" type="text">
+            </div>
+            <div class="col-xs-3 mx-1">
+                <button id="search-btn" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>  
+        <hr>
+        <table id="table" class="table table-striped">
+            <thead class="thead-dark">
+                <th>id</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Cumpleaños</th>
+                <th>Edad</th>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+        <h3 id="nores"></h3>
+    </div>
+
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
