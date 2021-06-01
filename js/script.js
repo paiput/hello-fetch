@@ -1,28 +1,24 @@
+const table = document.getElementById('table');
 const searchBtn = document.getElementById('search-btn');
 
-searchBtn.addEventListener('click', () => {
-    fetchUser();
-});
+searchBtn.addEventListener('click', () => fetchUser());
 
 // cuando termine de cargar el documento poblamos la tabla
-document.addEventListener("DOMContentLoaded", () => {
-    fetchData();
-});
+document.addEventListener('DOMContentLoaded', () => fetchData());
 
 // esta funcion carga la tabla apenas carga la pagina
 // fetch() es el método nativo de los navegadores para hacer peticiones AJAX
 // se usa con promesas ya que es asíncrono
-const fetchData = () => {
+function fetchData() {
     fetch('https://hello-database-paiput.herokuapp.com/api/users')
         .then(res => res.json())
-        .then(users => {
-            populateTable(users);
-        });
+        .then(users => populateTable(users))
+        .catch(() => showError("Error, no se pudo cargar la tabla de usuarios"));
 }
 
 // esta funcion carga los usuarios en la tabla
 // crea una fila en la tabla por cada elemento en el array users
-const populateTable = (users) => {
+function populateTable(users) {
     for (let user of users) {
         // borramos las propiedades que no queremos en la tabla
         delete user._id;
@@ -46,15 +42,27 @@ const populateTable = (users) => {
     }
 }
 
+const errorMsg = document.querySelector('.error-msg');
+function showError(errorText) {
+    const errorMsgPar = document.querySelector('.error-msg p');
+    errorMsgPar.innerText = errorText;
+    errorMsg.classList.replace('d-none', 'd-flex');
+}
+function closeError() {
+    errorMsg.classList.replace('d-flex', 'd-none');
+}
+
 // esta funcion carga un solo usuario en la tabla
 function fetchUser() {
     let id = document.getElementById('userID').value;
     // si el id no es un numero terminamos
-    if (isNaN(id)) return;
+    if (isNaN(id)) return //showError();
     fetch(`https://hello-database-paiput.herokuapp.com/api/user/${id}`)
         .then(res => res.json())
         .then(user => {
-            let users = [user];  // populateTable usa un array de objetos como argumento
+            closeError(); // cierra el mensaje de error porque sino queda aunque aparezcan los datos
+            // populateTable usa un array de objetos como argumento
+            let users = [user];  
             // si tenemos un usuario lo cargamos en la tabla
             if (users[0] !== null) {
                 // reemplazamos el tbody por uno nuevo con el usuario que encontramos
@@ -72,5 +80,6 @@ function fetchUser() {
                 document.getElementById('table').hidden = true;
                 document.getElementById('nores').innerHTML = 'No hay resultados';
             }
-        });
+        })
+        .catch(() => showError("Por favor ingrese un ID de usuario"));
 }
